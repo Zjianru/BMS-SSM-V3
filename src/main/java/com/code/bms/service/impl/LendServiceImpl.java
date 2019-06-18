@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.code.bms.mapper.BookInfoMapper;
 import com.code.bms.mapper.LendListMapper;
-import com.ryoeiken.bms.pojo.*;
 import com.code.bms.service.LendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,7 @@ public class LendServiceImpl implements LendService {
         LendListExample lendListExample = new LendListExample();
         LendListExample.Criteria criteria = lendListExample.createCriteria();
         criteria.andReaderIdEqualTo(readerId);
-        List<LendList> lendLists = this.lendListMapper.selectByExample(lendListExample);
-        return lendLists;
+        return this.lendListMapper.selectByExample(lendListExample);
     }
 
     @Override
