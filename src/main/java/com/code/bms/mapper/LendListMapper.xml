@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.code.bms.mapper.LendListMapper">
+    <resultMap id="BaseResultMap" type="com.code.bms.pojo.LendList">
+        <id column="sernum" property="sernum" jdbcType="BIGINT"/>
+        <result column="book_id" property="bookId" jdbcType="BIGINT"/>
+        <result column="reader_id" property="readerId" jdbcType="INTEGER"/>
+        <result column="lend_date" property="lendDate" jdbcType="DATE"/>
+        <result column="back_date" property="backDate" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    sernum, book_id, reader_id, lend_date, back_date
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.code.bms.pojo.LendListExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from lend_list
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from lend_list
+        where sernum = #{sernum,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from lend_list
+    where sernum = #{sernum,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.code.bms.pojo.LendListExample">
+        delete from lend_list
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.code.bms.pojo.LendList">
+    insert into lend_list (sernum, book_id, reader_id, 
+      lend_date, back_date)
+    values (#{sernum,jdbcType=BIGINT}, #{bookId,jdbcType=BIGINT}, #{readerId,jdbcType=INTEGER}, 
+      #{lendDate,jdbcType=DATE}, #{backDate,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" parameterType="com.code.bms.pojo.LendList">
+        insert into lend_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sernum != null">
+                sernum,
+            </if>
+            <if test="bookId != null">
+                book_id,
+            </if>
+            <if test="readerId != null">
+                reader_id,
+            </if>
+            <if test="lendDate != null">
+                lend_date,
+            </if>
+            <if test="backDate != null">
+                back_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sernum != null">
+                #{sernum,jdbcType=BIGINT},
+            </if>
+            <if test="bookId != null">
+                #{bookId,jdbcType=BIGINT},
+            </if>
+            <if test="readerId != null">
+                #{readerId,jdbcType=INTEGER},
+            </if>
+            <if test="lendDate != null">
+                #{lendDate,jdbcType=DATE},
+            </if>
+            <if test="backDate != null">
+                #{backDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.code.bms.pojo.LendListExample" resultType="java.lang.Integer">
+        select count(*) from lend_list
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update lend_list
+        <set>
+            <if test="record.sernum != null">
+                sernum = #{record.sernum,jdbcType=BIGINT},
+            </if>
+            <if test="record.bookId != null">
+                book_id = #{record.bookId,jdbcType=BIGINT},
+            </if>
+            <if test="record.readerId != null">
+                reader_id = #{record.readerId,jdbcType=INTEGER},
+            </if>
+            <if test="record.lendDate != null">
+                lend_date = #{record.lendDate,jdbcType=DATE},
+            </if>
+            <if test="record.backDate != null">
+                back_date = #{record.backDate,jdbcType=DATE},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update lend_list
+        set sernum = #{record.sernum,jdbcType=BIGINT},
+        book_id = #{record.bookId,jdbcType=BIGINT},
+        reader_id = #{record.readerId,jdbcType=INTEGER},
+        lend_date = #{record.lendDate,jdbcType=DATE},
+        back_date = #{record.backDate,jdbcType=DATE}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.code.bms.pojo.LendList">
+        update lend_list
+        <set>
+            <if test="bookId != null">
+                book_id = #{bookId,jdbcType=BIGINT},
+            </if>
+            <if test="readerId != null">
+                reader_id = #{readerId,jdbcType=INTEGER},
+            </if>
+            <if test="lendDate != null">
+                lend_date = #{lendDate,jdbcType=DATE},
+            </if>
+            <if test="backDate != null">
+                back_date = #{backDate,jdbcType=DATE},
+            </if>
+        </set>
+        where sernum = #{sernum,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.code.bms.pojo.LendList">
+    update lend_list
+    set book_id = #{bookId,jdbcType=BIGINT},
+      reader_id = #{readerId,jdbcType=INTEGER},
+      lend_date = #{lendDate,jdbcType=DATE},
+      back_date = #{backDate,jdbcType=DATE}
+    where sernum = #{sernum,jdbcType=BIGINT}
+  </update>
+</mapper>
